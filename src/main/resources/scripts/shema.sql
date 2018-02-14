@@ -46,7 +46,7 @@ CREATE TABLE user (
   COMMENT 'email пользователя',
   password VARCHAR(255) NOT NULL
   COMMENT 'Пароль пользователя',
-  active   BOOLEAN      NOT NULL DEFAULT FALSE,
+  active   BOOLEAN      NOT NULL,
   version  INTEGER      NOT NULL
   COMMENT 'Статус регистрации'
 );
@@ -128,11 +128,11 @@ CREATE TABLE notification (
   COMMENT 'Идентификатор сообщения',
   channel     ENUM ('email', 'sms') NOT NULL
   COMMENT 'Канал для отправки сообщения',
-  active_date DATE
+  active_date DATE NOT NULL
   COMMENT 'Дата активации сообщения',
-  adress      VARCHAR(255)
+  adress      VARCHAR(255) NOT NULL
   COMMENT 'Адресс электронной почты',
-  massage     VARCHAR(255),
+  massage     VARCHAR(255) NOT NULL ,
   version     INTEGER               NOT NULL
   COMMENT 'Сообщение активации учетной записи'
 );

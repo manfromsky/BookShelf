@@ -25,7 +25,6 @@ import static org.springframework.transaction.annotation.Propagation.REQUIRES_NE
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
 @Service
 public class UserServiceImpl implements UserService {
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     private static final String ACTIVATION_URL = "%shttp://localhost:8080/activation?code=%s";
     private static final String ACTIVATION_MESSAGE = "Для активации вашего аккаунта пройдите по этой ссылке ";
     private final UserDao userDao;
@@ -89,13 +88,13 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserActivation createUserActivation(User user, String activationCode) {
-        return new UserActivation(user, activationCode);
+        return new UserActivation(user, activationCode, new Date());
     }
 
-    private void createNotification(User user, String activationCode) {
+    private void createNotification(String password, String activationCode) {
         Date currentDate = new Date();
         Notification notification = new Notification(Channel.EMAIL, currentDate,
-                user.getEmail(), String.format(ACTIVATION_URL, ACTIVATION_MESSAGE, activationCode));
+                password, String.format(ACTIVATION_URL, ACTIVATION_MESSAGE, activationCode));
         notificationDao.save(notification);
     }
 
@@ -107,7 +106,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         UserActivation userActivation = createUserActivation(user, activationCode);
         user.setUserActivation(userActivation);
-        createNotification(user, activationCode);
+        createNotification(user.getPassword(), activationCode);
         save(user);
     }
 
@@ -115,7 +114,8 @@ public class UserServiceImpl implements UserService {
     public void selectUserActive(String hash) {
         List<User> userList = userDao.findAll();
         for (User user : userList) {
-            if (user.getUserActivation().getHash().equals(hash)) {
+            if (user.getUserActivation().getHash().equals(hash) ||
+                    new Date().equals(user.getUserActivation().getActiveDate())) {
                 user.setActive(true);
                 save(user);
             }

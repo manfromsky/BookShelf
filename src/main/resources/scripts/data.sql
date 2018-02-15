@@ -1,15 +1,25 @@
 USE bookshelf;
 
-INSERT INTO shelf (name, description, version) VALUES ('Художественная литература', 'На этой полке представлены лучшие собрания
-сочинений мировых авторов художественной литературы', 0);
-INSERT INTO shelf (name, description, version) VALUES ('Детям и родителям', 'На этой полке представлены книги полезные для
-молодых мам и их детей.', 0);
-INSERT INTO shelf (name, description, version) VALUES ('Бизнес книги', 'На этой полке находятся книги, которые помогут вам в
-ведениии бизнеса', 0);
 INSERT INTO user (email, password, active, version) VALUES
   ('rempenza@mail.ru', '12345', TRUE, 0);
 INSERT INTO user (email, password, active, version) VALUES
-  ('testproject@gmail.com', 'asdfg', TRUE , 0);
+  ('testproject@gmail.com', 'asdfg', TRUE, 0);
+
+INSERT INTO user_activation (user_id, hash, active_date, version) VALUES (1,
+                                                                          '5358em5264en5734a@5123ai5076.r5499',
+                                                                          '26-01-17', 0);
+INSERT INTO user_activation (user_id, hash, active_date, version) VALUES (2,
+                                                                          '5264au5734ho5076is3008gm4559il2162co5123',
+                                                                          '25-01-17', 0);
+
+
+INSERT INTO shelf (name, description, user_id, version) VALUES ('Художественная литература', 'На этой полке представлены лучшие собрания
+сочинений мировых авторов художественной литературы', 1, 0);
+INSERT INTO shelf (name, description, user_id, version) VALUES ('Детям и родителям', 'На этой полке представлены книги полезные для
+молодых мам и их детей.', 1, 0);
+INSERT INTO shelf (name, description, user_id, version) VALUES ('Бизнес книги', 'На этой полке находятся книги, которые помогут вам в
+ведениии бизнеса', 1, 0);
+
 
 INSERT INTO book (shelf_id, user_id, file_path, name, author, description, isbn, version)
 VALUES (1, 1, 'Origin.txt', 'Origin', 'Den Braun', 'Роберт Лэнгдон прибывает

@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-       public void selectUserActive(String hash) {
+    public void selectUserActive(String hash) {
         List<User> userList = userDao.findAll();
         for (User user : userList) {
             if (user != null && user.getUserActivation().getHash().equals(hash)) {

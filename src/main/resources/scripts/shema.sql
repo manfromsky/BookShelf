@@ -126,7 +126,7 @@ CREATE TABLE access_request (
 CREATE TABLE notification (
   id          INT UNSIGNED          NOT NULL AUTO_INCREMENT PRIMARY KEY
   COMMENT 'Идентификатор сообщения',
-  channel     ENUM ('email', 'sms') NOT NULL
+  channel     ENUM ('EMAIL', 'SMS') NOT NULL
   COMMENT 'Канал для отправки сообщения',
   active_date DATE NOT NULL
   COMMENT 'Дата активации сообщения',
